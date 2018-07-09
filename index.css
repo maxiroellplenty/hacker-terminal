@@ -1,0 +1,65 @@
+body
+{
+    --primary-bg-color: #191818;
+    --primary-font-color: rgb(34, 201, 34);
+    --secondary-font-color: rgb(255, 255, 255);
+    --error-font-color: rgb(235, 51, 51);
+    --warning-font-color: rgb(249, 170, 0);
+    --terminal-header-height: 40px;
+    --terminal-header-bg-color: #505050;
+    font-family: 'Share Tech Mono', monospace; 
+    background-image: url(shield-logo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.desktop
+{
+    margin: 10%;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.terminal-container
+{
+    
+}
+
+.terminal
+{
+    background-color: var(--primary-bg-color);
+    color: var(--primary-font-color);
+    height: 70vh;
+    position: relative;
+    opacity: 0.8;
+    font-size: 1.5rem;
+    padding-left: 5px;
+}
+
+.terminal-header
+{
+    height: var(--terminal-header-height);
+    line-height: var(--terminal-header-height);
+    font-size: 2rem;
+    padding-left: 5px;
+    background-color: var(--terminal-header-bg-color);
+    color: var(--error-font-color);
+}
+
+.terminal input
+{
+    background-color: transparent;
+    color: var(--primary-font-color);
+    outline: none;
+    border: none; 
+}
+
+.terminal-inner-container
+{
+
+}
+
+.error
+{
+    color: var(--error-font-color);
+}
