@@ -2,10 +2,11 @@ var user = {
   username: "Warmachine68",
   password: "WARMACHINEROX"
 };
-var errorMessage = "bash$: command not found: ";
+var errorMessage = "TermGear$: command not found: ";
 var machineName = "ATCU MAINFRAME";
 var terminal = document.getElementsByClassName("terminal")[0];
 var terminalHeader = document.getElementsByClassName("terminal-header")[0];
+var matrixRainInterval;
 initTerminal();
 
 function initTerminal() {
@@ -17,6 +18,12 @@ function addInputEventListener() {
   var input = document.getElementsByTagName("INPUT")[0];
   input.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
+      if(input.value === '')
+      {
+        replaceInput(input, terminal);
+        addInput(terminal);
+        return;
+      }
       replaceInput(input, terminal);
       executeCommand(input.value);
       addInput(terminal);
@@ -36,15 +43,32 @@ function executeCommand(inputValue) {
     case "engage":
         engage();
         break;
+    case "sshcrack":
+        sshCrack();
+        break;
+    case "connect":
+        connect();
+        break;
     default:
       addErrorMessage(inputValue);
       break;
   }
 }
 
+function connect()
+{
+  
+}
+
+function sshCrack()
+{
+  addMessage(terminal,'Starting SSHCrack');
+}
+
 function engage()
 {
-    draw();
+    drawMatrixRain();   
+    
 }
 
 function addMessage(terminal, message, simulated) {
@@ -108,7 +132,7 @@ function clearTerminal(terminal) {
   terminal.innerHTML = "";
 }
 //drawing the characters
-function draw()
+function drawMatrixRain()
 {
   var container = document.createElement('canvas');
   container.classList.add('matrix-effect');
@@ -122,7 +146,7 @@ function draw()
   var chinese = "田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑";
   //converting the string into an array of single characters
   chinese = chinese.split("");
-  var font_size = 10;
+  var font_size = 14;
   var columns = c.width / font_size; //number of columns for the rain
   //an array of drops - one per column
   var drops = [];
@@ -134,11 +158,11 @@ function draw()
 
 	//Black BG for the canvas
   //translucent BG to show trail
-  setInterval(function(){ 
+    matrixRainInterval = setInterval(function(){ 
     ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
     ctx.fillRect(0, 0, c.width, c.height);
     
-    ctx.fillStyle = "#0F0"; //green text
+    ctx.fillStyle = "#FF0000"; //green text
     ctx.font = font_size + "px arial";
     //looping over drops
     for(var i = 0; i < drops.length; i++)

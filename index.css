@@ -1,7 +1,7 @@
 body
 {
     --primary-bg-color: #191818;
-    --primary-font-color: rgb(34, 201, 34);
+    --primary-font-color: #5dc7d8;
     --secondary-font-color: rgb(255, 255, 255);
     --error-font-color: rgb(235, 51, 51);
     --warning-font-color: rgb(249, 170, 0);
@@ -33,7 +33,9 @@ body
     position: relative;
     opacity: 0.8;
     font-size: 1.5rem;
-    padding-left: 5px;
+    padding: 0 5px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .terminal-header
@@ -43,7 +45,17 @@ body
     font-size: 2rem;
     padding-left: 5px;
     background-color: var(--terminal-header-bg-color);
-    color: var(--error-font-color);
+    color: var(--secondary-font-color);
+}
+.terminal-header .exit-button
+{
+    float: right;
+    padding-right: 5px;
+}
+.terminal-header .exit-button:hover
+{
+   cursor: pointer;
+   color: var(--error-font-color);
 }
 
 .terminal input
