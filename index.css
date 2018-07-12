@@ -20,9 +20,26 @@ body
     font-family: 'Share Tech Mono', monospace;
 }
 
+.term-link
+{
+    background-color: black;
+    width: 60px;
+    height: 60px;
+}
+
 .terminal-container
 {
     
+}
+
+.progress
+{
+    height: 40px !important;
+    border-radius: 0 !important;
+}
+.progress-bar
+{
+    background-color: var(--terminal-header-bg-color) !important;
 }
 
 .terminal

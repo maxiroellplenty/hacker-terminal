@@ -18,8 +18,7 @@ function addInputEventListener() {
   var input = document.getElementsByTagName("INPUT")[0];
   input.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
-      if(input.value === '')
-      {
+      if (input.value === "") {
         replaceInput(input, terminal);
         addInput(terminal);
         return;
@@ -41,41 +40,38 @@ function executeCommand(inputValue) {
       clearTerminal(terminal);
       break;
     case "engage":
-        engage();
-        break;
+      engage();
+      break;
     case "sshcrack":
-        sshCrack();
-        break;
+      sshCrack();
+      break;
     case "connect":
-        connect();
-        break;
+      connect();
+      break;
     default:
       addErrorMessage(inputValue);
       break;
   }
 }
 
-function connect()
+function connect() 
 {
-  
+  progressBar();
 }
 
-function sshCrack()
-{
-  addMessage(terminal,'Starting SSHCrack');
+function sshCrack() {
+  addMessage(terminal, "Starting SSHCrack");
 }
 
-function engage()
-{
-    drawMatrixRain();   
-    
+function engage() {
+  drawMatrixRain();
 }
 
 function addMessage(terminal, message, simulated) {
   var messageContainer = document.createElement("div");
   if (simulated === true) {
     terminal.appendChild(messageContainer);
-    simulatedTyping(message, messageContainer,addMessage);
+    simulatedTyping(message, messageContainer, addMessage);
   } else {
     messageContainer.innerHTML = message;
     terminal.appendChild(messageContainer);
@@ -93,9 +89,8 @@ function simulatedTyping(string, element, callback) {
     setTimeout(function() {
       writer(i);
     }, rand);
-    if(i === string.length)
-    {
-      callback(terminal,`Logged in as ${user.username}`);
+    if (i === string.length) {
+      callback(terminal, `Logged in as ${user.username}`);
       addInput(terminal);
     }
   })(0);
@@ -132,10 +127,9 @@ function clearTerminal(terminal) {
   terminal.innerHTML = "";
 }
 //drawing the characters
-function drawMatrixRain()
-{
-  var container = document.createElement('canvas');
-  container.classList.add('matrix-effect');
+function drawMatrixRain() {
+  var container = document.createElement("canvas");
+  container.classList.add("matrix-effect");
   terminal.appendChild(container);
   var c = document.getElementsByClassName("matrix-effect")[0];
   var ctx = c.getContext("2d");
@@ -143,7 +137,8 @@ function drawMatrixRain()
   c.height = 300;
   c.width = terminal.clientWidth;
   //chinese characters - taken from the unicode charset
-  var chinese = "田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑";
+  var chinese =
+    "田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑";
   //converting the string into an array of single characters
   chinese = chinese.split("");
   var font_size = 14;
@@ -152,36 +147,59 @@ function drawMatrixRain()
   var drops = [];
   //x below is the x coordinate
   //1 = y co-ordinate of the drop(same for every drop initially)
-  for (var x = 0; x < columns; x++)
-    drops[x] = 1;
-  
+  for (var x = 0; x < columns; x++) drops[x] = 1;
 
-	//Black BG for the canvas
+  //Black BG for the canvas
   //translucent BG to show trail
-    matrixRainInterval = setInterval(function(){ 
+  matrixRainInterval = setInterval(function() {
     ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
     ctx.fillRect(0, 0, c.width, c.height);
-    
+
     ctx.fillStyle = "#FF0000"; //green text
     ctx.font = font_size + "px arial";
     //looping over drops
-    for(var i = 0; i < drops.length; i++)
-    {
+    for (var i = 0; i < drops.length; i++) {
       //a random chinese character to print
-      var text = chinese[Math.floor(Math.random()*chinese.length)];
+      var text = chinese[Math.floor(Math.random() * chinese.length)];
       //x = i*font_size, y = value of drops[i]*font_size
-      ctx.fillText(text, i*font_size, drops[i]*font_size);
-      
+      ctx.fillText(text, i * font_size, drops[i] * font_size);
+
       //sending the drop back to the top randomly after it has crossed the screen
       //adding a randomness to the reset to make the drops scattered on the Y axis
-      if(drops[i]*font_size > c.height && Math.random() > 0.975)
+      if (drops[i] * font_size > c.height && Math.random() > 0.975)
         drops[i] = 0;
-      
+
       //incrementing Y coordinate
       drops[i]++;
     }
   }, 33);
 }
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 
-
+function progressBar()
+{
+  var progressBar = document.createElement('div');
+  progressBar.classList.add('progress');
+  terminal.appendChild(progressBar);
+  progressBar.innerHTML = `<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>`;
+  var width = progressBar.lastElementChild.style.width;
+  width = width.replace('%','');
+  width = Number(width);
+  while(width < 100)
+  {
+     
+      sleep(300).then(() => {
+        var progress = Math.floor(Math.random() * 30);
+        var tempWidth = progress + width;
+        if(tempWidth <= 100)
+        {
+          progressBar.lastElementChild.style.width = tempWidth+'%';
+          width = tempWidth;
+          tempWidth = null;
+        }
+      })
+  }
+}
